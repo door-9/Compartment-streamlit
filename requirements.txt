@@ -1,5 +1,5 @@
-pandas
-numpy
-matplotlib
-seaborn
-scipy
+pandas ==2.0.3
+numpy ==1.22.3
+matplotlib == 3.8.4
+scipy == 1.7.3
+openpyxl ==3.1.5

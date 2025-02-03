@@ -199,8 +199,8 @@ with col2:
         plt.scatter(t_obs, c_obs, c='red', label='Observed')
     if len(conc_sim) > 0:
         plt.plot(t_sim, conc_sim, 'b--', label='Simulated')
-    plt.xlabel('Time (h)')
-    plt.ylabel('Concentration (mg/L)')
+    plt.xlabel('Time')
+    plt.ylabel('Concentration')
     plt.title('Concentration-Time Profile')
     plt.legend()
     plt.grid(alpha=0.3)

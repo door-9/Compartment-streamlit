@@ -373,3 +373,6 @@ if 'report' in st.session_state:
     plt.xlabel('Theoretical Quantiles')
     plt.ylabel('Sample Quantiles')
     plt.legend()
+    
+    plt.tight_layout()
+    st.pyplot(fig)

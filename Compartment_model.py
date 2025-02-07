@@ -307,7 +307,7 @@ if 'report' in st.session_state:
             param_df = param_df[~param_df['Parameter'].isin(['CLd', 'Vp'])]
             if p['admin_route'] == 'IV':
                 param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
-        else
+        else :
             if p['admin_route'] == 'IV':
                 param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
         st.dataframe(param_df, hide_index=True)

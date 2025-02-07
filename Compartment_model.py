@@ -199,8 +199,8 @@ with col2:
         plt.scatter(t_obs, c_obs, c='red', label='Observed')
     if len(conc_sim) > 0:
         plt.plot(t_sim, conc_sim, 'b--', label='Simulated')
-    plt.xlabel('Time')
-    plt.ylabel('Concentration')
+    plt.xlabel('Time (h)')
+    plt.ylabel('Concentration (mg/L)')
     plt.title('Concentration-Time Profile')
     plt.legend()
     plt.grid(alpha=0.3)
@@ -299,17 +299,14 @@ if 'report' in st.session_state:
         # 파라미터 테이블
         p = st.session_state.report['params']
         param_df = pd.DataFrame({
-            'Parameter': ['CL', 'Vc', 'CLd', 'Vp', 'Ka ', 'F'],
+            'Parameter': ['CL', 'Vc', 'CLd', 'Vp', 'Ka', 'F'],
             'Value': [p['CL'], p['Vc'], p.get('CLd', np.nan), 
                     p.get('Vp', np.nan), p.get('Ka', np.nan), p.get('F', np.nan)],
         })
         if p['model_type'] == '1-Compartment':
             param_df = param_df[~param_df['Parameter'].isin(['CLd', 'Vp'])]
-            if p['admin_route'] == 'IV':
-                param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
-        else :
-            if p['admin_route'] == 'IV':
-                param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
+        if p['admin_route'] == 'IV':
+            param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
         st.dataframe(param_df, hide_index=True)
 
     with subcol2:

@@ -305,8 +305,11 @@ if 'report' in st.session_state:
         })
         if p['model_type'] == '1-Compartment':
             param_df = param_df[~param_df['Parameter'].isin(['CLd', 'Vp'])]
-        if p['admin_route'] == 'IV':
-            param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
+            if p['admin_route'] == 'IV':
+                param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
+        else
+            if p['admin_route'] == 'IV':
+                param_df = param_df[~param_df['Parameter'].isin(['Ka', 'F'])]
         st.dataframe(param_df, hide_index=True)
 
     with subcol2:

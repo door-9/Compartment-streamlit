@@ -350,19 +350,26 @@ if 'report' in st.session_state:
     plt.xlabel('Observed')
     plt.ylabel('Predicted')
     
-    # Q-Q 플롯 (Scipy 버전 호환성 처리)
+    # Q-Q 플롯 (Scipy 버전 호환성 처리 및 회귀선 추가)
     plt.subplot(2,2,4)
     res = st.session_state.report['residuals']
     try:
-        (osm, osr), _ = probplot(res, dist="norm", fit=True)
-    except:
+        # fit=True를 사용하면 slope, intercept, r 값을 함께 반환함
+        (osm, osr), (slope, intercept, r) = probplot(res, dist="norm", fit=True)
+    except Exception as e:
         prob_res = probplot(res, dist="norm", fit=False)
         osm, osr = prob_res[0], prob_res[1]
-    plt.scatter(osm, osr, alpha=0.6)
-    plt.plot([-3, 3], [-3, 3], 'r--')
+        # fit 결과가 없으면 np.polyfit을 이용해 회귀선 추정
+        slope, intercept = np.polyfit(osm, osr, 1)
+
+    plt.scatter(osm, osr, alpha=0.6, label="Data")
+    # 기준 선 (Identity line)
+    plt.plot([min(osm), max(osm)], [min(osm), max(osm)], 'r--', label="Identity")
+    # 회귀선 계산 및 플롯
+    x_vals = np.linspace(min(osm), max(osm), 100)
+    plt.plot(x_vals, intercept + slope * x_vals, 'g-', label="Regression Line")
+
     plt.title('Normal Q-Q Plot')
     plt.xlabel('Theoretical Quantiles')
     plt.ylabel('Sample Quantiles')
-    
-    plt.tight_layout()
-    st.pyplot(fig)
+    plt.legend()
